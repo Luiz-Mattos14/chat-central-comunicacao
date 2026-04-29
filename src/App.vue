@@ -1,7 +1,18 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue';
+import ChatMain from './components/ChatMain/ChatMain.vue';
+import Sidebar from './components/Sidebar/Sidebar.vue';
 </script>
 
 <template>
-  <HelloWorld />
+  <section class="chat-app">
+    <Sidebar />
+
+    <ChatMain />
+  </section>
 </template>
+
+<style lang="scss" scoped>
+.chat-app {
+  display: flex;
+}
+</style>

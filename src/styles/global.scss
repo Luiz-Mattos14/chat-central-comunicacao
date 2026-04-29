@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swa');
+
+html {
+  font-size: 62.5%; // 1rem = 10px
+}
+
+body {
+  font-size: var(--font-size-base) !important;
+  font-family: var(--font-family-base) !important;
+  font-weight: var(--font-weight-base) !important;
+  overflow-x: hidden;
+}
+
+.title {
+  font-family: var(--font-family-title);
+  font-size: var(--font-size-title);
+  font-weight: 500;
+  color: var(--color-base);
+  line-height: 1.6;
+}
+
+.description {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weigh-small);
+  color: var(--slate-blue);
+}
