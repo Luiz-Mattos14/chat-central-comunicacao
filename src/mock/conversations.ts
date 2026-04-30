@@ -10,6 +10,8 @@ export type Message = {
   sender: 'user' | 'contact';
   timestamp: string;
   status?: 'sending' | 'sent' | 'read';
+  imageUrl?: string;
+  isImage?: boolean;
 };
 
 export type Conversation = {
@@ -41,14 +43,14 @@ export const mockConversations: Conversation[] = [
     id: 'conv1',
     userId: '1', // Carlos Mendes
     messages: [
-      { id: '1', text: 'Olá! Como você está?', sender: 'contact', timestamp: '14:30' },
-      { id: '2', text: 'Olá! Estou bem sim, e você?', sender: 'user', timestamp: '14:35' },
-      { id: '3', text: 'Estou ótimo! Precisava falar sobre o projeto.', sender: 'contact', timestamp: '14:40' },
-      { id: '4', text: 'Claro! Pode falar, estou ouvindo.', sender: 'user', timestamp: '14:42' },
+      { id: '1', text: 'Olá Carlos, tudo bem com você?', sender: 'user', timestamp: '14:30' },
+      { id: '2', text: 'Bom dia Roberto, por aqui tudo certo! E com você?', sender: 'contact', timestamp: '14:35' },
+      { id: '3', text: 'Show! Precisava falar sobre o projeto.', sender: 'contact', timestamp: '14:40' },
+      { id: '4', text: 'Chegou a ver o que te mandei no e-mail', sender: 'contact', timestamp: '14:42' },
       { id: '5', text: 'A reunião foi remarcada para sexta, tudo bem?', sender: 'contact', timestamp: '14:50' },
     ],
     startPositionMessage: 2,
-    unreadCount: 2,
+    unreadCount: 1,
     isArchived: false,
     lastMessageTime: '14:50',
   },
@@ -56,14 +58,15 @@ export const mockConversations: Conversation[] = [
     id: 'conv2',
     userId: '2', // Luiz Ferreira
     messages: [
-      { id: '1', text: 'Bom dia! Analisei a proposta.', sender: 'contact', timestamp: '09:00' },
-      { id: '2', text: 'Bom dia! O que achou?', sender: 'user', timestamp: '09:05' },
+      { id: '1', text: 'Oi Luiz, conseguiu analisar a proposta?', sender: 'user', timestamp: '09:00' },
+      { id: '2', text: 'Oi Roberto, sim! Analisei e gostei bastante.', sender: 'contact', timestamp: '09:05' },
       {
         id: '3',
-        text: 'Concordo com a proposta, vamos em frente com o projeto.',
+        text: 'Podemos marcar uma reunião para alinhar os próximos passos.',
         sender: 'contact',
         timestamp: '09:30',
       },
+      { id: '4', text: 'Que tal quinta-feira às 14h?', sender: 'contact', timestamp: '09:35' },
     ],
     startPositionMessage: 2,
     unreadCount: 0,
@@ -74,9 +77,11 @@ export const mockConversations: Conversation[] = [
     id: 'conv3',
     userId: '3', // Maria Silva
     messages: [
-      { id: '1', text: 'Podemos marcar uma reunião essa semana?', sender: 'contact', timestamp: '12:00' },
-      { id: '2', text: 'Claro! Quando você estaria disponível?', sender: 'user', timestamp: '12:15' },
-      { id: '3', text: 'Estou disponível na terça-feira às 10h.', sender: 'contact', timestamp: '13:10' },
+      { id: '1', text: 'Maria, você recebeu os documentos?', sender: 'user', timestamp: '12:00' },
+      { id: '2', text: 'Recebi sim Roberto! Já estou analisando.', sender: 'contact', timestamp: '12:15' },
+      { id: '3', text: 'Podemos nos reunir na terça para discutirmos?', sender: 'contact', timestamp: '13:10' },
+      { id: '4', text: 'Tenho disponível às 10h ou às 15h.', sender: 'contact', timestamp: '13:15' },
+      { id: '5', text: 'Me confirma o horário por favor.', sender: 'contact', timestamp: '13:20' },
     ],
     startPositionMessage: 2,
     unreadCount: 1,
@@ -87,14 +92,9 @@ export const mockConversations: Conversation[] = [
     id: 'conv4',
     userId: '4', // Ana Costa
     messages: [
-      { id: '1', text: 'Participei da reunião hoje mais cedo.', sender: 'contact', timestamp: '14:00' },
-      { id: '2', text: 'Legal! Como foi?', sender: 'user', timestamp: '14:10' },
-      {
-        id: '3',
-        text: 'Foi muito produtiva, precisamos integrar essas ideias.',
-        sender: 'contact',
-        timestamp: '15:20',
-      },
+      { id: '1', text: 'Ana, como foi a reunião de hoje?', sender: 'user', timestamp: '14:00' },
+      { id: '2', text: 'Oi Roberto! Foi muito produtiva.', sender: 'contact', timestamp: '14:10' },
+      { id: '3', text: 'Precisamos integrar as ideias que surgiram.', sender: 'contact', timestamp: '15:20' },
     ],
     startPositionMessage: 2,
     unreadCount: 0,
@@ -105,14 +105,12 @@ export const mockConversations: Conversation[] = [
     id: 'conv5',
     userId: '5', // João Pereira
     messages: [
-      { id: '1', text: 'Precisamos revisar o cronograma.', sender: 'contact', timestamp: '14:00' },
-      { id: '2', text: 'Concordo. O que você sugere?', sender: 'user', timestamp: '14:20' },
-      { id: '3', text: 'Atrasamos em algumas entregas.', sender: 'contact', timestamp: '14:45' },
-      { id: '4', text: 'Vou verificar com o time.', sender: 'user', timestamp: '14:55' },
-      { id: '5', text: 'Podemos rever o cronograma na próxima reunião.', sender: 'contact', timestamp: '15:05' },
+      { id: '1', text: 'João, como está o andamento do cronograma?', sender: 'user', timestamp: '14:00' },
+      { id: '2', text: 'Roberto, estamos um pouco atrasados.', sender: 'contact', timestamp: '14:20' },
+      { id: '3', text: 'Atrasamos por causa do feriado.', sender: 'contact', timestamp: '14:45' },
     ],
     startPositionMessage: 3,
-    unreadCount: 3,
+    unreadCount: 2,
     isArchived: false,
     lastMessageTime: '15:05',
   },
@@ -120,9 +118,10 @@ export const mockConversations: Conversation[] = [
     id: 'conv6',
     userId: '6', // Fernanda Alves
     messages: [
-      { id: '1', text: 'Os resultados preliminares chegaram!', sender: 'contact', timestamp: '10:30' },
-      { id: '2', text: 'Que ótimo! Vou dar uma olhada.', sender: 'user', timestamp: '10:45' },
-      { id: '3', text: 'Estou ansiosa para os resultados, ótimo trabalho!', sender: 'contact', timestamp: '11:45' },
+      { id: '1', text: 'Fernanda, os resultados chegaram?', sender: 'user', timestamp: '10:30' },
+      { id: '2', text: 'Oi Roberto! Sim, chegaram agora há pouco.', sender: 'contact', timestamp: '10:45' },
+      { id: '3', text: 'Superaram as expectativas!', sender: 'contact', timestamp: '11:45' },
+      { id: '4', text: 'Vou te enviar o relatório completo.', sender: 'contact', timestamp: '11:50' },
     ],
     startPositionMessage: 2,
     unreadCount: 0,
@@ -133,9 +132,8 @@ export const mockConversations: Conversation[] = [
     id: 'conv7',
     userId: '7', // Ricardo Lima
     messages: [
-      { id: '1', text: 'Recebi os dados do setor financeiro.', sender: 'contact', timestamp: '09:00' },
-      { id: '2', text: 'Ótimo! Vamos analisar.', sender: 'user', timestamp: '10:00' },
-      { id: '3', text: 'Precisamos de mais dados antes de seguir.', sender: 'contact', timestamp: '14:00' },
+      { id: '1', text: 'Ricardo, como estão os dados financeiros?', sender: 'user', timestamp: '09:00' },
+      { id: '2', text: 'Roberto, recebi os dados do setor.', sender: 'contact', timestamp: '10:00' },
     ],
     startPositionMessage: 2,
     unreadCount: 1,
@@ -146,9 +144,10 @@ export const mockConversations: Conversation[] = [
     id: 'conv8',
     userId: '8', // Beatriz Souza
     messages: [
-      { id: '1', text: 'Você tem o contato do jurídico?', sender: 'contact', timestamp: '09:30' },
-      { id: '2', text: 'Tenho sim! Vou te passar agora.', sender: 'user', timestamp: '09:45' },
-      { id: '3', text: 'É juridico@empresa.com, ramal 3045.', sender: 'contact', timestamp: '10:00' },
+      { id: '1', text: 'Beatriz, você tem o contato do jurídico?', sender: 'user', timestamp: '09:30' },
+      { id: '2', text: 'Oi Roberto! Tenho sim, vou te passar.', sender: 'contact', timestamp: '09:45' },
+      { id: '3', text: 'juridico@empresa.com, ramal 3045.', sender: 'contact', timestamp: '10:00' },
+      { id: '4', text: 'Qualquer coisa pode me chamar.', sender: 'contact', timestamp: '10:05' },
     ],
     startPositionMessage: 2,
     unreadCount: 0,
