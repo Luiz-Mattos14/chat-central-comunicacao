@@ -4,6 +4,18 @@ Aplicação de chat moderna desenvolvida com **Vue 3 + TypeScript + Vite**, simu
 
 &nbsp;
 
+## Preview
+
+### Desktop
+
+![Chat App Preview](./src/assets/images/print/chat-desktop.png)
+
+### Mobile
+
+<p align="center"><img src="./src/assets/images/print/chat-mobile-1.png" width="45%" />&nbsp;&nbsp;&nbsp;<img src="./src/assets/images/print/chat-mobile-2.png" width="45%" /></p>
+
+&nbsp;
+
 ## Tecnologias
 
 | Tecnologia | Versão | Finalidade              |
@@ -137,19 +149,18 @@ npx vitest users.spec.ts
 
 A função principal do mock combina dados de usuários e conversas em um único objeto enriquecido.
 
-<table style="width: 100%; border-collapse: collapse;"><thead><tr><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Campo</th><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Tipo</th><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Descrição</th></tr></thead><tbody><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>id</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Identificador único da conversa</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>userId</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">ID do usuário (referência)</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>messages</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>Message[]</code></td><td style="border: 1px solid #ddd; padding: 8px;">Array de mensagens da conversa</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>startPositionMessage</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>number</code></td><td style="border: 1px solid #ddd; padding: 8px;">Quantidade de mensagens exibidas ao abrir (2 a 3)</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>unreadCount</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>number</code></td><td style="border: 1px solid #ddd; padding: 8px;">Número de mensagens não lidas (bullet)</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>isArchived</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>boolean</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>true</code> = conversa arquivada</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>lastMessageTime</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Horário da última mensagem</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>user</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>User</code></td><td style="border: 1px solid #ddd; padding: 8px;">Objeto com dados do contato</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>lastMessage</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Texto da última mensagem exibida na prévia</td></tr></tbody></table>
-
+<table border="1" cellpadding="6" cellspacing="0"><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>string</code></td><td>Yes</td><td>Unique conversation identifier</td></tr><tr><td><code>userId</code></td><td><code>string</code></td><td>Yes</td><td>Reference to user ID</td></tr><tr><td><code>messages</code></td><td><code>Message[]</code></td><td>Yes</td><td>List of messages</td></tr><tr><td><code>startPositionMessage</code></td><td><code>number</code></td><td>Yes</td><td>Initial messages displayed</td></tr><tr><td><code>unreadCount</code></td><td><code>number</code></td><td>Yes</td><td>Unread messages count</td></tr><tr><td><code>isArchived</code></td><td><code>boolean</code></td><td>Yes</td><td>Indicates archived conversation</td></tr><tr><td><code>lastMessageTime</code></td><td><code>string</code></td><td>Yes</td><td>Last message timestamp</td></tr><tr><td><code>user</code></td><td><code>User</code></td><td>Yes</td><td>User object</td></tr><tr><td><code>lastMessage</code></td><td><code>string</code></td><td>Yes</td><td>Last message preview</td></tr></tbody></table>
 &nbsp;
 
 ### Objeto `User`
 
-<table style="width: 100%; border-collapse: collapse;"><thead><tr><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Campo</th><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Tipo</th><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Descrição</th></tr></thead><tbody><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>id</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Identificador único do usuário (1 a 8)</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>name</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Nome completo do contato</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>avatar</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Caminho da imagem do avatar</td></tr></tbody></table>
+<table border="1" cellpadding="6" cellspacing="0"><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>string</code></td><td>Yes</td><td>Unique user identifier (1 to 8)</td></tr><tr><td><code>name</code></td><td><code>string</code></td><td>Yes</td><td>Full name of the contact</td></tr><tr><td><code>avatar</code></td><td><code>string</code></td><td>Yes</td><td>Avatar image path</td></tr></tbody></table>
 
 &nbsp;
 
 ### Objeto `Message`
 
-<table style="width: 100%; border-collapse: collapse;"><thead><tr><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Campo</th><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Tipo</th><th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Descrição</th></tr></thead><tbody><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>id</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Identificador único da mensagem</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>text</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Conteúdo da mensagem</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>sender</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>'user' | 'contact'</code></td><td style="border: 1px solid #ddd; padding: 8px;">Remetente: usuário logado ou contato</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>timestamp</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">Horário da mensagem</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>imageUrl?</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>string</code></td><td style="border: 1px solid #ddd; padding: 8px;">URL da imagem (quando houver)</td></tr><tr><td style="border: 1px solid #ddd; padding: 8px;"><code>isImage?</code></td><td style="border: 1px solid #ddd; padding: 8px;"><code>boolean</code></td><td style="border: 1px solid #ddd; padding: 8px;">Indica se a mensagem é uma imagem</td></tr></tbody></table>
+<table border="1" cellpadding="6" cellspacing="0"><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>string</code></td><td>Yes</td><td>Unique message identifier</td></tr><tr><td><code>text</code></td><td><code>string</code></td><td>Yes</td><td>Message content</td></tr><tr><td><code>sender</code></td><td><code>'user' | 'contact'</code></td><td>Yes</td><td>Message sender (logged user or contact)</td></tr><tr><td><code>timestamp</code></td><td><code>string</code></td><td>Yes</td><td>Message timestamp</td></tr><tr><td><code>imageUrl</code></td><td><code>string</code></td><td>No</td><td>Image URL (if applicable)</td></tr><tr><td><code>isImage</code></td><td><code>boolean</code></td><td>No</td><td>Indicates if the message is an image</td></tr></tbody></table>
 
 &nbsp;
 
@@ -187,3 +198,15 @@ A função principal do mock combina dados de usuários e conversas em um único
   }
 ]
 ```
+
+&nbsp;
+
+## Considerações Finais
+
+Este projeto foi desenvolvido com foco em simular uma experiência real de uma central de comunicação, priorizando organização de estado, componentização e boas práticas com Vue 3 e TypeScript.
+
+Além das funcionalidades principais, também houve preocupação com:
+
+- separação de responsabilidades através de hooks (Composition API)
+- escalabilidade da estrutura de pastas
+- testes unitários para garantir confiabilidade das regras de negócio
