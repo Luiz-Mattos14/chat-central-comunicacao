@@ -14,6 +14,9 @@ const selectedConversation = ref<ConversationWithUser | null>(null);
 // Lista completa de todas as conversas (para arquivar/desarquivar)
 const conversations = ref<ConversationWithUser[]>([]);
 
+// Referência para o componente Sidebar
+const sidebarRef = ref<InstanceType<typeof Sidebar> | null>(null);
+
 // ============================================
 // MÉTODOS
 // ============================================
@@ -50,17 +53,23 @@ function handleArchive(id: string) {
   }
 }
 
-// Volta para a tela anterior (usado no mobile)
+// Mostra a sidebar novamente (quando clica em voltar)
 function handleBack() {
-  console.log('Voltar');
-  // TODO: Implementar lógica de voltar
+  // Chama o método do Sidebar para mostrar a sidebar novamente
+  if (sidebarRef.value) {
+    sidebarRef.value.showSidebar();
+  }
 }
 </script>
 
 <template>
   <section class="chat-app">
     <!-- Sidebar: lista de conversas e navegação -->
-    <Sidebar @select-conversation="handleSelectConversation" @conversations-loaded="handleConversationsLoaded" />
+    <Sidebar
+      ref="sidebarRef"
+      @select-conversation="handleSelectConversation"
+      @conversations-loaded="handleConversationsLoaded"
+    />
 
     <!-- ChatMain: área principal do chat -->
     <ChatMain

@@ -1,10 +1,28 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
 import SidebarHeader from './SidebarHeader.vue';
 import SidebarSearch from './SidebarSearch.vue';
 import SidebarArchived from './SidebarArchived.vue';
 import SidebarConversation from './SidebarConversation.vue';
-import { getConversationsWithUsers, type ConversationWithUser } from '../../mock/combined';
+import type { ConversationWithUser } from '../../mock/combined';
+import { useMobile } from '../Hooks/useMobile';
+import { useSidebarVisibility } from '../Hooks/useSidebarVisibility';
+import { useConversations } from '../Hooks/useConversations';
+import { useFilteredConversations } from '../Hooks/useFilteredConversations';
+
+// ============================================
+// HOOKS
+// ============================================
+const { isMobile } = useMobile();
+const { isSidebarVisible, hideSidebarOnMobile, showSidebar } = useSidebarVisibility(isMobile);
+const {
+  conversationsWithUsers,
+  selectedId,
+  searchQuery,
+  showArchived,
+  loadConversations,
+  toggleArchived,
+  selectConversation: selectConversationRaw,
+} = useConversations();
 
 // ============================================
 // EVENTOS
@@ -15,86 +33,42 @@ const emit = defineEmits<{
 }>();
 
 // ============================================
-// ESTADOS
-// ============================================
-
-// Lista completa de conversas (combinada com dados do usuário)
-const conversationsWithUsers = ref<ConversationWithUser[]>([]);
-
-// ID da conversa atualmente selecionada
-const selectedId = ref<string | null>(null);
-
-// Texto digitado no campo de busca
-const searchQuery = ref('');
-
-// Controla se mostra conversas arquivadas ou não
-const showArchived = ref(false);
-
-// ============================================
 // COMPUTADOS
 // ============================================
-
-/*
-Filtra as conversas baseado em:
-- Mostrar arquivadas ou não arquivadas
-- Texto da busca (filtra pelo nome do usuário)
-*/
-const filteredConversations = computed(() => {
-  if (!conversationsWithUsers.value.length) return [];
-
-  // Primeiro filtra por arquivado/não arquivado
-  let result = conversationsWithUsers.value.filter((item) => (showArchived.value ? item.isArchived : !item.isArchived));
-
-  // Depois filtra pela busca (se houver)
-  if (searchQuery.value) {
-    result = result.filter((item) => item.user.name.toLowerCase().includes(searchQuery.value.toLowerCase()));
-  }
-
-  return result;
-});
+const filteredConversations = useFilteredConversations(conversationsWithUsers, showArchived, searchQuery);
 
 // ============================================
 // MÉTODOS
 // ============================================
+function selectConversation(id: string) {
+  const conversation = selectConversationRaw(id);
+  if (conversation) {
+    emit('select-conversation', conversation);
+  }
+  hideSidebarOnMobile();
+}
 
-// Carrega as conversas do mock e emite para o App
-function loadConversations() {
-  const data = getConversationsWithUsers();
-  conversationsWithUsers.value = data;
+function handleLoadConversations() {
+  const data = loadConversations();
   emit('conversations-loaded', data);
-
-  // Seleciona a primeira conversa automaticamente
   if (data.length > 0) {
-    selectedId.value = data[0].id;
     emit('select-conversation', data[0]);
   }
 }
 
-// Alterna entre mostrar conversas normais e arquivadas
-function toggleArchived() {
-  showArchived.value = !showArchived.value;
-  selectedId.value = null; // Reseta seleção ao mudar de lista
-}
+// ============================================
+// EXPOSIÇÃO
+// ============================================
+defineExpose({ showSidebar });
 
-// Seleciona uma conversa e remove a notificação de não lidas
-function selectConversation(id: string) {
-  selectedId.value = id;
-  const conversation = conversationsWithUsers.value.find((item) => item.id === id);
-
-  if (conversation) {
-    conversation.unreadCount = 0; // Remove o bullet de notificação
-    emit('select-conversation', conversation);
-  }
-
-  console.log('Conversa selecionada:', id);
-}
-
-// Carrega as conversas quando o componente é montado
-onMounted(loadConversations);
+// ============================================
+// CICLO DE VIDA
+// ============================================
+handleLoadConversations();
 </script>
 
 <template>
-  <aside class="sidebar">
+  <aside class="sidebar" :class="{ 'sidebar-hidden': isMobile && !isSidebarVisible }"">
     <!-- Cabeçalho com logo -->
     <SidebarHeader />
 
@@ -114,12 +88,27 @@ onMounted(loadConversations);
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/mixins.scss' as *;
+
 .sidebar {
   width: 320px;
   height: 100vh;
+  background: var(--white);
   border-right: 1px solid var(--gray-1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  @include media('xs') {
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+  }
+
+  &.sidebar-hidden {
+    @include media('xs') {
+      transform: translateX(-100%);
+    }
+  }
 }
 </style>

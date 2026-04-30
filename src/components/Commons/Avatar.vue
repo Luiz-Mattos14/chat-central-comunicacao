@@ -1,28 +1,32 @@
-<template>
-  <div class="avatar" :class="[size, { online: isOnline }]" :style="avatarStyle">
-    <img v-if="hasImage && !imageError" :src="imageUrl" :alt="name" @error="handleImageError" />
-    <span v-else class="initials">
-      {{ initials }}
-    </span>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
+// ============================================
+// PROPS
+// ============================================
 const props = defineProps<{
-  name: string;
-  imageUrl?: string;
-  size?: 'sm' | 'md' | 'lg';
-  isOnline?: boolean;
+  name: string; // Nome da pessoa (para gerar iniciais)
+  imageUrl?: string; // URL da imagem do avatar
+  size?: 'sm' | 'md' | 'lg'; // Tamanho do avatar (small, medium, large)
 }>();
 
+// ============================================
+// ESTADOS
+// ============================================
+
+// Controla se houve erro ao carregar a imagem
 const imageError = ref(false);
 
+// ============================================
+// COMPUTADOS
+// ============================================
+
+// Verifica se tem imagem válida para exibir
 const hasImage = computed(() => {
   return props.imageUrl && props.imageUrl.trim() !== '';
 });
 
+// Define a classe CSS do tamanho baseado na prop size
 const sizeClass = computed(() => {
   const sizes = {
     sm: 'sm',
@@ -32,6 +36,7 @@ const sizeClass = computed(() => {
   return sizes[props.size || 'md'];
 });
 
+// Estilo CSS para imagem de fundo (quando tem imagem)
 const avatarStyle = computed(() => {
   if (hasImage.value && !imageError.value) {
     return {
@@ -43,6 +48,7 @@ const avatarStyle = computed(() => {
   return {};
 });
 
+// Gera as iniciais do nome (máximo 2 letras)
 const initials = computed(() => {
   return props.name
     .split(' ')
@@ -52,21 +58,40 @@ const initials = computed(() => {
     .slice(0, 2);
 });
 
-const handleImageError = () => {
+// ============================================
+// MÉTODOS
+// ============================================
+
+/*
+Trata erro de carregamento da imagem
+Mostra as iniciais como fallback
+ */
+function handleImageError(): void {
   imageError.value = true;
   console.warn(`Failed to load image: ${props.imageUrl}`);
-};
+}
 </script>
+
+<template>
+  <div class="avatar" :class="[size]" :style="avatarStyle">
+    <!-- Imagem do avatar (se existir e não tiver erro) -->
+    <img v-if="hasImage && !imageError" :src="imageUrl" :alt="name" @error="handleImageError" />
+    <!-- Iniciais do nome (fallback quando não tem imagem) -->
+    <span v-else class="initials">
+      {{ initials }}
+    </span>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .avatar {
   border-radius: 50%;
-  background-color: #1976d2;
-  color: white;
+  background-color: var(--dark-blue);
+  color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
+  font-weight: var(--font-weight-bold);
   position: relative;
   flex-shrink: 0;
   overflow: hidden;
@@ -83,34 +108,34 @@ const handleImageError = () => {
 
   // Tamanhos
   &.sm {
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 1.2rem;
   }
 
   &.md {
-    width: 40px;
-    height: 40px;
-    font-size: 14px;
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.4rem;
   }
 
   &.lg {
-    width: 48px;
-    height: 48px;
-    font-size: 16px;
+    width: 4.8rem;
+    height: 4.8rem;
+    font-size: 1.6rem;
   }
 
-  // Indicador de online
+  // Indicador de online (bolinha verde)
   &.online::after {
     content: '';
     position: absolute;
-    bottom: 2px;
-    right: 2px;
-    width: 12px;
-    height: 12px;
+    bottom: 0.2rem;
+    right: 0.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
     background-color: #4caf50;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 0.2rem solid var(--white);
     z-index: 2;
   }
 }

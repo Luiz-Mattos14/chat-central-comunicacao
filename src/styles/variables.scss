@@ -3,14 +3,16 @@
   --font-family-title: 'Inter', sans-serif;
 
   --font-size-title: 1.8rem;
-
   --font-size-small: 1.3rem;
   --font-size-base: 1.4rem;
 
-  --font-weigh-small: 300;
+  --font-weight-small: 300;
   --font-weight-base: 400;
+  --font-weight-bold: 700;
 
   --color-base: #334155;
+  --color-flag-bg: #fefce8;
+  --color-flag-text: #ca8a04;
 
   --white: #fff;
   --dark-blue: #0768ac;
@@ -18,4 +20,14 @@
 
   --gray-1: #e2e8f0;
   --gray-2: #f1f5f9;
+
+  --shadow-sm: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.1);
+
+  --border-radius-sm: 0.8rem;
+  --border-radius-md: 1.8rem;
+  --border-radius-lg: 2rem;
+
+  --animation-duration: 1.4s;
+  --animation-delay-1: 0.2s;
+  --animation-delay-2: 0.4s;
 }
