@@ -1,21 +1,39 @@
 <script setup lang="ts">
 import Icons from '../Commons/Icons.vue';
 
+// ============================================
+// PROPS
+// ============================================
+
+/*
+Valor do campo de busca (two-way binding com v-model)
+O valor vem do componente pai (Sidebar) via prop modelValue
+*/
 defineProps<{
   modelValue: string;
 }>();
 
+// ============================================
+// EVENTOS
+// ============================================
+
+/**
+Emite evento para atualizar o valor no componente pai
+Isso permite o two-way binding com v-model
+*/
 defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 </script>
 
 <template>
-  <!-- Busca -->
+  <!-- Componente de busca de conversas -->
   <div class="sidebar-search-box">
     <div class="field">
+      <!-- Ícone de lupa -->
       <Icons name="icon-search" :size="16" class="icon-search" />
 
+      <!-- Campo de input: -->
       <input
         type="text"
         :value="modelValue"
@@ -28,7 +46,6 @@ defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-// Busca
 .sidebar-search-box {
   padding: 0.8rem 1.6rem;
 
@@ -45,6 +62,7 @@ defineEmits<{
 
   > .field .icon-search {
     color: var(--color-base);
+    flex-shrink: 0;
   }
 
   > .field .search-input {

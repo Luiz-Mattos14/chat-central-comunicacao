@@ -2,40 +2,57 @@
 import type { ConversationWithUser } from '../../mock/combined';
 import Avatar from '../Commons/Avatar.vue';
 
+// ============================================
+// PROPS
+// ============================================
 defineProps<{
-  conversations: ConversationWithUser[];
-  selectedId: string | null;
+  conversations: ConversationWithUser[]; // Lista de conversas a ser exibida
+  selectedId: string | null; // ID da conversa atualmente selecionada
 }>();
 
+// ============================================
+// EVENTOS
+// ============================================
 defineEmits<{
-  (e: 'select-conversation', id: string): void;
+  (e: 'select-conversation', id: string): void; // Emite o ID quando clica em uma conversa
 }>();
 </script>
 
 <template>
   <div class="sidebar-conversations-list">
+    <!-- LOOP: Renderiza cada conversa da lista -->
     <div
       v-for="item in conversations"
       :key="item.id"
       class="conversation-item"
-      :class="{ active: selectedId === item.id, archived: item.isArchived }"
+      :class="{
+        active: selectedId === item.id, // Destaque para conversa selecionada
+        archived: item.isArchived, // Estilo diferente para arquivadas
+      }"
       @click="$emit('select-conversation', item.id)"
     >
+      <!-- Avatar do contato -->
       <Avatar :name="item.user.name" :image-url="item.user.avatar" size="lg" />
 
+      <!-- Informações da conversa -->
       <div class="conversation-info">
         <div class="conversation-header">
+          <!-- Nome do contato -->
           <div class="conversation-name">
             {{ item.user.name }}
+            <!-- Badge de arquivada (se aplicável) -->
             <span v-if="item.isArchived" class="archived-badge">Arquivada</span>
           </div>
+          <!-- Horário da última mensagem -->
           <span v-if="item.lastMessageTime" class="time">
             {{ item.lastMessageTime }}
           </span>
         </div>
 
+        <!-- Prévia da última mensagem -->
         <div class="message-preview">
           <span class="last-message">{{ item.lastMessage || 'Nenhuma mensagem' }}</span>
+          <!-- Bolinha de notificação de mensagens não lidas -->
           <div v-if="item.unreadCount && !item.isArchived" class="notification">
             {{ item.unreadCount }}
           </div>
@@ -43,6 +60,7 @@ defineEmits<{
       </div>
     </div>
 
+    <!-- Mensagem quando não há conversas -->
     <div v-if="conversations.length === 0" class="empty-state">Nenhuma conversa encontrada</div>
   </div>
 </template>
